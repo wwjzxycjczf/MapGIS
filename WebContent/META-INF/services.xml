@@ -1,0 +1,34 @@
+<service name="MapGIS">  
+    <description>  
+        MapGIS Service Example
+    </description>  
+    <parameter name="ServiceClass">  
+        org.act.RCSsqlserver
+    </parameter>  
+    <operation name="readFile">  
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />  
+    </operation>  
+    <operation name="RegisterSensor">  
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />  
+    </operation>  
+    <operation name="GetRecord">  
+<!-- 这里要注意，当没有返回值时才用 
+org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver，没有参数还是用RPCMessageReceiver-->
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />  
+    </operation>  
+    <operation name="GetRecordlist">  
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />  
+    </operation> 
+    <operation name="GetDescription">  
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />  
+    </operation> 
+    <operation name="GetState">  
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />  
+    </operation> 
+    <operation name="GetObservation">  
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />  
+    </operation> 
+    <operation name="query">  
+        <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />  
+    </operation> 
+</service>

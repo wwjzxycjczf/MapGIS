@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" href="css/normal.css"/>
+
+<script type="text/javascript"  src="websocket.js"></script>
+<script type="text/javascript"  src="mapapi.js"></script>
+<script type="text/javascript"  src="getmap.js"></script>
+</head>
+
+
+<body onload="initialize()">
+
+<div id="allbody"   style="width:100%; height:100%; border:1px solid #000000;overflow:visible;">
+<!-- <div id="platepng"  style="background-image:url(images/right.png);position:absolute;width:40px;right:5px;top:65px;z-index:9999;height:400px;display:block;"></div> -->
+<div id="Plate" style="position:absolute;right:5px;top:65px;width:280px;z-index:10000;height:400px;display:display;">
+	<div class="navright">
+		<div class="navrtop" style="right:0px">&nbsp;</div>
+		<div class="navrcontent">
+			<div class="topmenu">
+                <div class="up">
+                    <div id="rightbox1">
+ 	                   <h2></h2>
+    	                 <div id="eventlist"  style="font-family: Courier New;width: 240px;height:240px;overflow:auto;position:absolute;text-align:left;left:10px;top:75px;">
+    	                </div>
+        	        </div>
+                    </div>
+                </div>
+                <div class="down">
+                <div id="rightbox2">
+            	    <img src="images/options.png" style="left:8px;position:absolute;top:320px;z-index:9999"></img>
+            	    
+            	    <div  id="checkbox" style="font-family: Courier New;width: 240px;height:240px;overflow:auto;position:absolute;text-align:left;left:10px;top:375px;font-size:15px;line-height:3em;">
+        
+            	    <form name ="form1" id="form1">
+            	    <input type="checkbox" name="SC" value = "Show all devices" onclick="checkedthis(this)" checked>  显示所有设备<br>
+					<input type="checkbox" name="SC" value = "Show online radars" onclick="checkedthis(this)" disabled>  显示在线雷达<br>
+					<input type="checkbox" name="SC" value = "Show downline devices" onclick="checkedthis(this)" disabled>  显示离线雷达<br>
+					<input type="checkbox" name="SC" value = "Show silent radars" onclick="checkedthis(this)" disabled>  显示静默雷达<br>
+					<input type="checkbox" name="SC" value = "Show mistake radars" onclick="checkedthis(this)" disabled>  显示错误雷达<br>
+					 </form>
+				</div>
+                 </div>
+                </div>
+            </div>
+
+				<div class="navrbottom">&nbsp;</div>
+			</div>
+		</div>
+ </div>
+<div  id="listdiv" style="background-image:url(images/radarlistbkg.png);scroll:auto;overflow:auto;position:absolute;right:5px;top:65px;width:300px;z-index:10000;height:800px;display:none;">
+     <button id="close" style="background-image:url(images/close.png);z-index:9999;position:absolute;width:47px;height:18px;left:250px;top:0px;" onclick="radarDivclose(this)"></button>
+  		
+      		<table  border="1" width=100%>  
+	    		<tbody id="table2">
+    		<!-- 	<tr>
+    			<td>RadaID</td><td>FSPECA</td><td>FSPECB</td><td>SIC</td>
+    	  		<td>SAC</td><td>sector_num</td><td>utc</td><td>antenna_rotation_period</td><td>height</td>
+    	  		<td>lon</td><td>lat</td><td>time</td><td>personnel</td><td>admin</td>
+    	  		<tr>
+    	  		 -->
+    			</tbody>  
+  			</table>
+ </div>
+<div id="map_canvas" style="left:0;top:0;width:100%;height:100%;position:absolute;"></div>
+ <div id="banner" style="background-image:url(images/Banner.jpg); position:absolute;left:0px;top:0px;width:1000px;height:60px;"></div>
+ <div id="radaDiv" style="position:absolute; background-image:url(images/radarbkg.png);left:500px; top:50px; display:none;width:300px;height:400px;" >
+ 	<button id="close" style="background-image:url(images/close.png);z-index:9999;position:absolute;width:47px;height:18px;left:253px;top:0px;" onclick="radarDivclose(this)"></button>
+ 	<table id="table">  
+	   	<tbody id="_table">
+    	</tbody>   
+  	</table>
+ </div>
+<!--  <div id="radalist" style="position:absolute; background-image:url(images/radarbkg.png);left:60px; top:50px; display:block;width:300px;height:400px;" >
+ 	<button id="close" style="background-image:url(images/close.png);z-index:9999;position:absolute;width:47px;height:18px;left:253px;top:0px;" onclick="radarDivclose(this)"></button>
+		 <ul id="radars">
+			
+		</ul>
+ </div> 
+ -->
+ <div id="radaControlPanel" style="font-size:16px;font-family:Arial;position:absolute; background-image:url(images/radarinfobkg.png);display:none;width:500px;height:500px;top:360px;left:350px;border:2px solid #6699cc;" >
+ 	<button id="close" style="background-image:url(images/close.png);z-index:9999;position:absolute;width:47px;height:18px;left:450px;top:0px;" onclick="radarDivclose(this)"></button>
+	<button id="ok" style="background-image:url(images/ok.png);z-index:9999;position:absolute;width:115px;height:40px;left:100px;top:400px;" onclick="oksure(this)"></button>
+	<button id="cancel" style="background-image:url(images/cancel.png);z-index:9999;position:absolute;width:115px;height:40px;left:300px;top:400px;" onclick="radarDivclose(this)"></button>
+		<h3>radar information</h3>
+		 <div id="config" style="width:500px;height:200px;top:50px;left:0px;border:2px solid #6699cc;">
+		<!--  <h4>Configuration</h4>-->
+		 </div> 
+		 <div id="status" style="margin-left: 20px;margin-top:20px;	font-size:10px;	line-height:3em;">
+		 <form name ="form2" id="form2">
+            	    <input type="radio" name="SS" value = "Online"  disabled>  在线</input>
+					<input type="radio" name="SS" value = "Downline" disabled>  下线</input>
+					<input type="radio" name="SS" value = "Slience" disabled>  静止</input>
+					<input type="radio" name="SS" value = "Error" disabled>  错误</input>
+	 </form>
+		 </div>
+		 <div id="control" style="margin-left: 20px;	margin-top:20px;font-size:10px;	line-height:3em;">
+		 	<form name ="form3" id="form3">
+            	    <input type="radio" name="SCC" value = "Open" onclick="checkedthis2(this)" checked>  打开</input>
+					<input type="radio" name="SCC" value = "Close" onclick="checkedthis2(this)" unchecked>  关闭</input>
+					<input type="radio" name="SCC" value = "Reset" onclick="checkedthis2(this)" unchecked>  重置</input>
+		 </form>
+		 </div>
+	 	
+ </div>
+<div id="alertinfo" style="filter:alpha(opacity=100);background-image:url(images/alertbkg.png);z-index:9999;top:150px;right:400px;display:none;position:absolute;width:400px;">
+</div>
+<div style="-moz-opacity:0.5;filter:alpha(opacity=100);z-index:9999;top:40px;right:0px;position:absolute;width:400px;">
+	<span class="btn_click" title="主页" id="MapType_1" onclick="JavaScript:MapType(1)">主页</span><span class="btn_unclick_menu" title="雷达列表" id="MapType_2" onclick="JavaScript:MapType(2)">雷达列表</span><span class="btn_unclick_menu" title="网络设备列表" id="MapType_3" onclick="JavaScript:MapType(3)">网络设备列表</span><span class="btn_unclick_menu" title="关于我们" onclick="JavaScript:MenuSwitch();" id="MapType_4">关于我们<img src="http://www.airtu.com/FlightMap/Image/ListClose.gif" /></span>
+</div>
+
+</body>
+</html>
